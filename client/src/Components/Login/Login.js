@@ -1,6 +1,7 @@
 import { User, Lock, ArrowRightCircle, SquareX } from "lucide-react";
 import {useState, useContext} from "react";
-import userContext, { UserContext } from '../../Context/UserDetails';
+import { UserContext } from '../../Context/UserDetails';
+import api from "../../Api"
 
 export default function Login({changePageStatus, togglePageStatus}) {
     const { user, setUserDetails } = useContext(UserContext);
@@ -18,10 +19,21 @@ export default function Login({changePageStatus, togglePageStatus}) {
     
     function handleSubmit(e) {
         e.preventDefault();
-        console.log(credentials);
-        setUserDetails({
+        api.post("/auth/login",{
             username: credentials.username,
-        })
+            password: credentials.password,
+        }).then((response) => {
+            const data = response.data;
+            setUserDetails({
+                username: data.username,
+                email: data.email,
+                role: data.role,
+                name: data.name,
+            });
+        }).catch((error) => {
+            console.log("error has occured in the login page", error);
+        });
+        
         changePageStatus("loginPage", false)
     }
     

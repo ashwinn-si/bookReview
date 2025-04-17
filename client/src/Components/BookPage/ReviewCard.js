@@ -1,6 +1,6 @@
 import { Star } from "lucide-react";
 
-export default function ReviewCard({ username = "ashwin", stars = "4", review = "good book read again" }) {
+export default function ReviewCard({ username , stars , review  }) {
     const rating = parseFloat(stars);
     
     return (

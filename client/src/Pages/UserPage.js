@@ -2,66 +2,16 @@ import { useContext, useState, useEffect } from 'react';
 import Navbar from '../Components/Navbar/Navbar';
 import Footer from '../Components/Footer/Footer';
 import Header from '../Components/UserPage/Header';
-import ReviewCard from '../Components/BookPage/ReviewCard';
-import { UserContext } from '../Context/UserDetails';
+import ReviewCard from '../Components/UserPage/ReviewCard';
 import Img from "./../Assets/Images/addReview.jpg"
 import { useNavigate } from 'react-router-dom';
+import api from '../Api';
+import { UserContext } from '../Context/UserDetails';
 
 export default function UserPage(){
     const navigate = useNavigate();
-    const [reviews, setReviews] = useState([
-        {
-            username: "ashwin",
-            reviews: "Really enjoyed reading this book. The story kept me hooked!",
-            stars: "4.5"
-        },
-        {
-            username: "meera",
-            reviews: "A must-read for anyone who loves thrillers!",
-            stars: "5"
-        },
-        {
-            username: "john_doe",
-            reviews: "It was decent, but I expected more from the ending.",
-            stars: "3.5"
-        },
-        {
-            username: "sneha",
-            reviews: "Not my type of book. The pacing felt off.",
-            stars: "2"
-        },
-        {
-            username: "vikram99",
-            reviews: "Excellent writing and well-developed characters.",
-            stars: "4"
-        },
-        {
-            username: "sarah_lee",
-            reviews: "I finished it in one sitting. Loved it!",
-            stars: "5"
-        },
-        {
-            username: "karthik_m",
-            reviews: "Good plot but slow in the middle chapters.",
-            stars: "3"
-        },
-        {
-            username: "anita",
-            reviews: "Beautifully written and emotionally moving.",
-            stars: "4.5"
-        },
-        {
-            username: "ravi_teja",
-            reviews: "Too predictable for my taste.",
-            stars: "2.5"
-        },
-        {
-            username: "julia",
-            reviews: "Great book! Will definitely recommend to friends.",
-            stars: "5"
-        }
-    ]);
-    const {user, setUser} = useContext(UserContext)
+    const [reviews, setReviews] = useState();
+    const { user, setUserDetails } = useContext(UserContext);
     const [paginationLength, setPaginationLength] = useState(1);
     const [selectedPagination, setSelectedPagination] = useState(0)
     
@@ -70,8 +20,17 @@ export default function UserPage(){
         signUpPage : false,
         reviewPage : false
     });
+
+    async function fetchData(){
+        const response = await api.get(`user/user-review?username=${user?.username}`);
+        setReviews(response.data);
+    }
+    useEffect(() => {
+        fetchData();
+    },[])
     
     useEffect(()=> {
+        if(!reviews) return
         setPaginationLength(Math.ceil(reviews.length / 5) )
         setSelectedPagination(0)
     },[reviews])
@@ -115,11 +74,11 @@ export default function UserPage(){
                     <p className="font-header text-2xl font-bold text-accent italic ">Reviews Made By You</p>
                     {
                         reviews?.slice(selectedPagination*5, selectedPagination*5 + 5).map((review,index) => (
-                            <ReviewCard  username={review?.username} review={review.reviews} stars={review.stars} key={index}/>
+                            <ReviewCard  bookname={review.name} stars = {review.stars} author = {review.author} review={review.review} key={index}/>
                         ))
                     }
                     {
-                        reviews.length == 0 ?
+                        !reviews || reviews.length === 0 ?
                             <>
                                 <img src={Img}/>
                                 <button className="p-2 border border-primary rounded-lg bg-primary text-bg font-header hover:bg-bg hover:text-primary transition-colors duration-300 font-semibold tracking-wider my-3"

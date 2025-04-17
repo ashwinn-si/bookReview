@@ -11,7 +11,7 @@ function App() {
         <BrowserRouter>
             <Routes>
                 <Route path="/" element={<LandingPage />} />
-                <Route path="/book/:bookName" element={<BookPage />} />
+                <Route path="/book/:bookId" element={<BookPage />} />
                 <Route path="/user" element={<UserPage />} />
             </Routes>
         </BrowserRouter>

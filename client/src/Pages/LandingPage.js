@@ -6,6 +6,7 @@ import FeatureBooks from "../Components/FeatureBooks/FeatureBooks";
 import { useState } from 'react';
 import Testimonials from '../Components/Testimonials/Testinomials';
 import Footer from '../Components/Footer/Footer';
+import AddBook from '../Components/Admin/AddBook';
 
 export default function LandingPage() {
     const [pageOpenStatus, setPageOpenStatus] = useState({
@@ -30,20 +31,31 @@ export default function LandingPage() {
     
     return (
         <div className="relative">
-            <Navbar changePageStatus = {changePageStatus} />
+            <Navbar changePageStatus={changePageStatus} />
             <Hero />
             <FeatureBooks />
             <Testimonials />
             <Footer />
+            {pageOpenStatus.loginPage ? (
+                <Login
+                    changePageStatus={changePageStatus}
+                    togglePageStatus={togglePageStatus}
+                />
+            ) : null}
+            {pageOpenStatus.signUpPage ? (
+                <SignUp
+                    changePageStatus={changePageStatus}
+                    togglePageStatus={togglePageStatus}
+                />
+            ) : null}
             {
-                pageOpenStatus.loginPage ?
-                    <Login changePageStatus = {changePageStatus} togglePageStatus = {togglePageStatus} /> : null
-            }
-            {
-                pageOpenStatus.signUpPage ?
-                    <SignUp changePageStatus = {changePageStatus} togglePageStatus = {togglePageStatus} /> : null
+                pageOpenStatus.addBookPage ? (
+                <AddBook
+                    changePageStatus={changePageStatus}
+                    togglePageStatus={togglePageStatus}
+                />
+            ) : null
             }
         </div>
-        
-    )
+    );
 }

@@ -25,6 +25,7 @@ const login = async(data) =>{
 }
 
 const signUp = async(data) =>{
+    console.log(data)
     const {username, password, email, name} = data;
     
     const existingUser = await userModel.findOne({
@@ -48,10 +49,10 @@ const signUp = async(data) =>{
     const newUser = await userDetails.save();
     
     return {
-        username : existingUser.username,
-        role: existingUser.role,
-        email: existingUser.email,
-        name: existingUser.name
+        username : data.username,
+        role: "user",
+        email: data.email,
+        name: data.name
     }
 }
 
