@@ -1,9 +1,9 @@
 const userModel = require("../models/userModel")
 const bcrypt = require("bcrypt");
+const UserModel = require("../models/userModel");
 
 const login = async(data) =>{
     const {username, password} = data;
-    
     const existingUser = await userModel.findOne({username : username})
     
     if(!existingUser){
@@ -35,35 +35,40 @@ const signUp = async(data) =>{
         throw new Error("exisiting user")
     }
     
-    const hashPassword = await bcrypt.hash(password, existingUser.password, 10);
+    const hashPassword = await bcrypt.hash(password, 10);
     
-    const userDetails = {
-        username : username,
-        role : "user",
-        email : email,
+    const userDetails = new UserModel({
+        username: username,
+        role: "user",
+        email: email,
         password: hashPassword,
         name: name
+    });
+    
+    const newUser = await userDetails.save();
+    
+    return {
+        username : existingUser.username,
+        role: existingUser.role,
+        email: existingUser.email,
+        name: existingUser.name
     }
-    
-    const newUser = await userModel.save(userDetails);
-    
-    return
 }
 
 const addAdmin = async(data) =>{
     const {username, password} = data;
     
-    const hashPassword = await bcrypt.hash(password, existingUser.password, 10);
+    const hashPassword = await bcrypt.hash(password, 10);
     
-    const userDetails = {
+    const userDetails = new UserModel({
         username : username,
         role : "admin",
         email : "admin@gmail.com",
         password: hashPassword,
         name: "admin"
-    }
+    })
     
-    
+    await userDetails.save();
 }
 
 
