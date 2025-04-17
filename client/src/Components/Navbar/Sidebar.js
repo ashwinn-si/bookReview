@@ -2,7 +2,7 @@ import { useContext } from 'react';
 import { UserContext } from '../../Context/UserDetails';
 import { User, Menu, X } from 'lucide-react';
 import { NavItems } from './NavItems';
-export default function Sidebar({ closeSideBar, changePageStatus, logoutUser }) {
+export default function Sidebar({ closeSideBar, changePageStatus, logoutUser, currentPage }) {
     const { user, setUserDetails } = useContext(UserContext);
     
     const handlePageOpen = (page, status) =>{
@@ -21,7 +21,7 @@ export default function Sidebar({ closeSideBar, changePageStatus, logoutUser }) 
             </div>
             <div className="flex flex-col gap-4 p-6">
                 <div className=" flex-col flex justify-center items-center gap-6 text-left w-full">
-                    <NavItems />
+                    <NavItems currentPage = {currentPage}/>
                 </div>
             </div>
             <div className="flex flex-col gap-4 p-6 ">

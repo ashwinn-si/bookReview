@@ -1,13 +1,11 @@
-import Navbar from "../Components/Navbar/Navbar";
-import Hero from "../Components/Hero/Hero";
-import Login from "../Components/Login/Login";
-import SignUp from "../Components/SignUp/SignUp";
-import FeatureBooks from "../Components/FeatureBooks/FeatureBooks";
 import { useState } from 'react';
-import Testimonials from '../Components/Testimonials/Testinomials';
+import Navbar from '../Components/Navbar/Navbar';
+import Login from '../Components/Login/Login';
+import SignUp from '../Components/SignUp/SignUp';
 import Footer from '../Components/Footer/Footer';
 
-export default function LandingPage() {
+export default function BookPage(){
+    
     const [pageOpenStatus, setPageOpenStatus] = useState({
         loginPage : false,
         signUpPage : false,
@@ -30,10 +28,8 @@ export default function LandingPage() {
     
     return (
         <div className="relative">
-            <Navbar changePageStatus = {changePageStatus} />
-            <Hero />
-            <FeatureBooks />
-            <Testimonials />
+            <Navbar changePageStatus = {changePageStatus} currentPage={"BooksPage"}/>
+            
             <Footer />
             {
                 pageOpenStatus.loginPage ?
@@ -44,6 +40,5 @@ export default function LandingPage() {
                     <SignUp changePageStatus = {changePageStatus} togglePageStatus = {togglePageStatus} /> : null
             }
         </div>
-        
     )
 }

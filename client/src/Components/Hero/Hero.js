@@ -3,7 +3,7 @@ import bgImage from './../../Assets/Images/bgImage.jpg';
 export default function Hero() {
     return (
         <section
-            id="Home"
+            id="home"
             className="relative z-10 h-[60vh] w-full flex justify-center items-center"
             style={{
                 backgroundImage: `url(${bgImage})`,

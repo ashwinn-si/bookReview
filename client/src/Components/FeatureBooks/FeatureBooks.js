@@ -1,5 +1,7 @@
-import { useState } from "react";
+import { useContext, useEffect, useState } from 'react';
 import { Search } from 'lucide-react';
+import BookCard from './BookCard';
+import { BookContext } from '../../Context/BookDetails';
 
 export default function FeatureBooks() {
     const [categories, setCategories] = useState([
@@ -11,9 +13,38 @@ export default function FeatureBooks() {
         "Romance"
     ]);
     
+    const {books, setBooks} = useContext(BookContext)
+    
+    const [showBooks, setShowBooks] = useState(books);
+    
     const [searchBookName, setSearchBookName] = useState("");
     
     const [selectedCategory, setSelectedCategory] = useState([]);
+    
+    const [lengthPagination, setLenghtPagination] = useState(5);
+    
+    const [selectedPagination, setSelectedPagination] = useState(0);
+    
+    useEffect(() => {
+        let filteredBooks = []
+        if(selectedCategory.length > 0){
+            filteredBooks = (books.filter(book => book.category.some(cat => selectedCategory.includes(cat) )));
+        }else if(selectedCategory.length === 0){
+            filteredBooks = (books);
+        }
+        if(searchBookName.length > 0) {
+            filteredBooks =
+                filteredBooks.filter((book) =>
+                    book.name.toLowerCase().includes(searchBookName.toLowerCase())
+                )
+        }
+        if(searchBookName.length === 0 && selectedCategory.length === 0){
+            filteredBooks = books
+        }
+        setShowBooks(filteredBooks);
+        setSelectedPagination(0)
+        setLenghtPagination(Math.ceil(filteredBooks.length / 3));
+    },[selectedCategory, searchBookName]);
     
     return (
         <section id="review" className="w-full px-4 py-8 md:py-12">
@@ -63,12 +94,22 @@ export default function FeatureBooks() {
             </div>
             
             
-            {/*<div className="mt-8 w-full max-w-6xl mx-auto grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">*/}
-            {/*    */}
-            {/*    <div className="h-64 rounded-lg bg-accent/5 border border-accent/20 flex items-center justify-center text-accent/50 font-body">*/}
-            {/*        Book results will appear here*/}
-            {/*    </div>*/}
-            {/*</div>*/}
+            <div className="mt-8 w-full max-w-6xl mx-auto grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-3 gap-6">
+                {
+                    showBooks?.slice(selectedPagination * 3 , selectedPagination * 3  + 3).map((book, index) => (
+                        <BookCard Book = {book} key={index}/>
+                    ))
+                }
+            </div>
+            <div className="mt-4 flex justify-center items-center gap-3">
+                {
+                    Array.from({length : lengthPagination}).map((currNumber, index) => (
+                        <div className={`cursor-pointer py-2 px-3 border border-accent border-solid text-sm rounded-xl text-semibold ${selectedPagination === index ? 'bg-hilight text-bg' : ""}`} onClick={() => setSelectedPagination(index)} key={index}>
+                            {index + 1}
+                        </div>
+                    ))
+                }
+            </div>
         </section>
     );
 }

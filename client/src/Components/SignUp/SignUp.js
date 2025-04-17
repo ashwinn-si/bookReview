@@ -1,6 +1,6 @@
 import { User, Lock, ArrowRightCircle, SquareX } from "lucide-react";
 import {useState, useContext} from "react";
-import { UserContext } from '../Context/UserDetails';
+import { UserContext } from '../../Context/UserDetails';
 
 export default function SignUp({changePageStatus, togglePageStatus}) {
     const [credentials, setCredentials] = useState({

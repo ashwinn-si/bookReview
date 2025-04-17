@@ -1,6 +1,6 @@
 import {useState} from "react";
 
-export function NavItems() {
+export function NavItems({currentPage}) {
     const [items] = useState([{
         title: "Home",
         destination: "#home"
@@ -14,7 +14,10 @@ export function NavItems() {
     
     return (
         <>
+            
             {
+                currentPage === "LandingPage" ?
+                
                 items.map((item, index) => (
                     <a
                         href={item.destination}
@@ -24,6 +27,13 @@ export function NavItems() {
                         {item.title}
                     </a>
                 ))
+                    :
+                    <a
+                        href="/"
+                        className="font-body text-primaryText hover:text-hilight transition-colors duration-300 font-[500] mx-3 text-left"
+                    >
+                        Home
+                    </a>
             }
         </>
     );

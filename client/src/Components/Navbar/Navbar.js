@@ -4,7 +4,7 @@ import { NavItems } from "./NavItems";
 import { User, Menu, X } from 'lucide-react';
 import Sidebar from './Sidebar';
 
-export default function Navbar({changePageStatus}) {
+export default function Navbar({changePageStatus, currentPage = "LandingPage"}) {
     const { user, setUserDetails } = useContext(UserContext);
     const [sideBarOpen, setSideBarOpen] = useState(false);
     
@@ -29,7 +29,7 @@ export default function Navbar({changePageStatus}) {
                 window.innerWidth > 762 ?
                     <>
                         <div className="flex justify-center items-center gap-6 ">
-                            <NavItems />
+                            <NavItems currentPage={currentPage} />
                         </div>
                         {
                             user ?
@@ -66,7 +66,7 @@ export default function Navbar({changePageStatus}) {
                                     className="cursor-pointer text-accent hover:text-primary transition-colors duration-200 z-50"
                                 />
                         }
-                        {sideBarOpen && <Sidebar closeSideBar={closeSideBar} changePageStatus = {changePageStatus}  logoutUser = {logoutUser}/>}
+                        {sideBarOpen && <Sidebar closeSideBar={closeSideBar} changePageStatus = {changePageStatus}  logoutUser = {logoutUser} currentPage = {currentPage} /> }
                     </>
             }
         </nav>
