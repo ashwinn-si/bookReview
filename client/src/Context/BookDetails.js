@@ -30,7 +30,6 @@ export const BookContextProvider = ({ children }) => {
 
         window.addEventListener('beforeunload', handleUnload);
 
-        
         return () => {
             window.removeEventListener('beforeunload', handleUnload);
         };
