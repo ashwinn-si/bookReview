@@ -1,4 +1,4 @@
-import bgImage from './../../Assets/Images/bgImage.jpg';
+import bgImage from '../../Assets/Images/bgImage.png';
 
 export default function Hero() {
     return (

@@ -22,7 +22,7 @@ export function NavItems({currentPage}) {
                     <a
                         href={item.destination}
                         key={index}
-                        className="font-body text-primaryText hover:text-hilight transition-colors duration-300 font-[500] mx-3 text-left"
+                        className="font-body text-primaryText hover:text-hilight transition-colors duration-300 font-[500] mx-3 text-left text-lg"
                     >
                         {item.title}
                     </a>
@@ -30,7 +30,7 @@ export function NavItems({currentPage}) {
                     :
                     <a
                         href="/"
-                        className="font-body text-primaryText hover:text-hilight transition-colors duration-300 font-[500] mx-3 text-left"
+                        className="font-body text-primaryText hover:text-hilight transition-colors duration-300 font-[500] mx-3 text-left text-lg"
                     >
                         Home
                     </a>

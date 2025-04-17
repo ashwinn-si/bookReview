@@ -48,7 +48,7 @@ export default function FeatureBooks() {
     
     return (
         <section id="review" className="w-full px-4 py-8 md:py-12">
-            <h2 className="text-center font-header text-2xl md:text-3xl italic text-accent font-bold mb-6 md:mb-8">
+            <h2 className="text-center font-header text-2xl md:text-4xl italic text-accent font-bold mb-6 md:mb-8">
                 Feature Books
             </h2>
             
@@ -70,7 +70,7 @@ export default function FeatureBooks() {
                     <div className="flex flex-wrap gap-2 justify-center md:justify-start">
                         {categories.map((category, index) => (
                             <button
-                                className={`py-2 px-4 rounded-lg text-sm md:text-base transition-all duration-300 border ${
+                                className={`py-2 px-4 rounded-lg text-sm md:text-base transition-all duration-300 border font-[550] ${
                                     selectedCategory.includes(category)
                                         ? "bg-accent text-bg border-accent font-medium"
                                         : "border-accent/40 text-primaryText hover:bg-accent/10"

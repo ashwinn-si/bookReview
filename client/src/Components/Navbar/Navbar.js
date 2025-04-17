@@ -3,9 +3,11 @@ import { UserContext } from '../../Context/UserDetails';
 import { NavItems } from "./NavItems";
 import { User, Menu, X } from 'lucide-react';
 import Sidebar from './Sidebar';
+import {useNavigate} from 'react-router-dom';
 
 export default function Navbar({changePageStatus, currentPage = "LandingPage"}) {
     const { user, setUserDetails } = useContext(UserContext);
+    const navigate = useNavigate();
     const [sideBarOpen, setSideBarOpen] = useState(false);
     
     const closeSideBar = () => {
@@ -34,7 +36,7 @@ export default function Navbar({changePageStatus, currentPage = "LandingPage"}) 
                         {
                             user ?
                                 <div className="flex items-center gap-4 justify-center">
-                                    <User className="w-6 h-6 cursor-pointer hover:text-hilight transition-colors duration-200" />
+                                    <User className="w-6 h-6 cursor-pointer hover:text-hilight transition-colors duration-200" onClick={() => navigate("/user")}/>
                                     <button className="p-2 border border-primary rounded-lg text-primary hover:bg-primary/10 transition-colors duration-300 hover:bg-primary hover:text-bg font-semibold tracking-wider" onClick={() => logoutUser()}>
                                         LogOut
                                     </button>
