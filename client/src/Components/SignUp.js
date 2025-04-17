@@ -1,12 +1,14 @@
 import { User, Lock, ArrowRightCircle, SquareX } from "lucide-react";
-import {useState} from "react";
+import {useState, useContext} from "react";
+import { UserContext } from '../Context/UserDetails';
 
-export default function SignUp() {
+export default function SignUp({changePageStatus, togglePageStatus}) {
     const [credentials, setCredentials] = useState({
         username: "",
         password: "",
         name:""
     });
+    const { user, setUserDetails } = useContext(UserContext);
     
     function handleChange(e){
         setCredentials((prevCredentials) => ({
@@ -18,6 +20,10 @@ export default function SignUp() {
     function handleSubmit(e) {
         e.preventDefault();
         console.log(credentials);
+        setUserDetails({
+            username: credentials.username,
+        })
+        changePageStatus("signUpPage", false)
     }
     
     return (
@@ -25,7 +31,7 @@ export default function SignUp() {
             <form className="bg-white shadow-lg rounded-2xl p-8 w-80 relative" onSubmit={handleSubmit}>
                 <div className="relative">
                     <h2 className="text-2xl font-header font-semibold text-primary-text mb-6 text-center">SignUp</h2>
-                    <SquareX className="text-red-600 absolute  top-1 right-1 cursor-pointer hover:bg-red-600 hover:text-white hover:rounded-md transition-all duration-300" />
+                    <SquareX className="text-red-600 absolute  top-1 right-1 cursor-pointer hover:bg-red-600 hover:text-white hover:rounded-md transition-all duration-300" onClick={() => changePageStatus("signUpPage", false)}/>
                 </div>
                 
                 <div className="mb-6">
@@ -74,10 +80,10 @@ export default function SignUp() {
                 </div>
                 
                 <button className="w-full flex justify-center items-center gap-2 bg-primary text-white py-2 rounded-lg hover:opacity-90 transition-all" type="submit">
-                    <span className="font-body">Login</span>
+                    <span className="font-body">SignUp</span>
                     <ArrowRightCircle className="w-5 h-5" />
                 </button>
-                <p className="text-center mt-2">Existing User ? <span className="text-accent font-bold tracking-wide cursor-pointer">LogIn</span></p>
+                <p className="text-center mt-2">Existing User ? <span className="text-accent font-bold tracking-wide cursor-pointer" onClick = {() => togglePageStatus("signUpPage","loginPage")}>LogIn</span></p>
             </form>
         </div>
     );

@@ -1,7 +1,9 @@
 import { User, Lock, ArrowRightCircle, SquareX } from "lucide-react";
-import {useState} from "react";
+import {useState, useContext} from "react";
+import userContext, { UserContext } from '../../Context/UserDetails';
 
-export default function Login() {
+export default function Login({changePageStatus, togglePageStatus}) {
+    const { user, setUserDetails } = useContext(UserContext);
     const [credentials, setCredentials] = useState({
         username: "",
         password: ""
@@ -17,6 +19,10 @@ export default function Login() {
     function handleSubmit(e) {
         e.preventDefault();
         console.log(credentials);
+        setUserDetails({
+            username: credentials.username,
+        })
+        changePageStatus("loginPage", false)
     }
     
     return (
@@ -24,7 +30,7 @@ export default function Login() {
             <form className="bg-white shadow-lg rounded-2xl p-8 w-80 relative" onSubmit={handleSubmit}>
                 <div className="relative">
                     <h2 className="text-2xl font-header font-semibold text-primary-text mb-6 text-center">Login</h2>
-                    <SquareX className="text-red-600 absolute  top-1 right-1 cursor-pointer hover:bg-red-600 hover:text-white hover:rounded-md transition-all duration-300" />
+                    <SquareX className="text-red-600 absolute  top-1 right-1 cursor-pointer hover:bg-red-600 hover:text-white hover:rounded-md transition-all duration-300"  onClick={() => changePageStatus("loginPage", false)}/>
                 </div>
                 
                 <div className="mb-4">
@@ -61,7 +67,7 @@ export default function Login() {
                     <span className="font-body">Login</span>
                     <ArrowRightCircle className="w-5 h-5" />
                 </button>
-                <p className="text-center mt-2">New User ? <span className="text-accent font-bold">SignUp</span></p>
+                <p className="text-center mt-2">New User ? <span className="text-accent font-bold cursor-pointer" onClick = {() => togglePageStatus("loginPage","signUpPage")} >SignUp</span></p>
             </form>
         </div>
     );
