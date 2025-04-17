@@ -10,11 +10,11 @@ const bookSchema = new mongoose.Schema({
         required: [true, "Please enter a author name"],
     },
     category: {
-        type: String,
+        type: [String, ],
         required: [true, "Please enter a category"],
     }
 })
 
-const bookModel = mongoose.Model("Book", bookSchema);
+const bookModel = mongoose.model("Book", bookSchema);
 
 module.exports = bookModel;
