@@ -2,7 +2,6 @@ const adminService = require("../services/adminService")
 
 const addBook = async (req, res) => {
     try{
-        
         await  adminService.addBook(req.body);
         
         res.status(200).json({

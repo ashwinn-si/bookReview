@@ -11,8 +11,9 @@ const reviewSchema = new mongoose.Schema({
         required: [true, "Review is Required"]
     },
     bookId: {
-        type: Mongoose.Schema.Types.ObjectId,
-        required: [true, "Book ID is Required"]
+        type: mongoose.Schema.Types.ObjectId,
+        required: [true, "Book ID is Required"],
+        ref: "Book"
     },
     stars: {
         type: String,

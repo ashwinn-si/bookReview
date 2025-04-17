@@ -3,8 +3,11 @@ const helmet = require('helmet');
 const cors = require('cors');
 const rateLimit = require('express-rate-limit');
 const dbConnect = require('./config/dbConnect');
+
 const authRoute = require('./routes/authRoute');
 const adminRoute = require('./routes/adminRoute');
+const userRoute = require("./routes/userRoute")
+const bookRoute = require("./routes/bookRoute")
 
 const app = express();
 
@@ -21,5 +24,7 @@ dbConnect();
 
 app.use("/auth", authRoute);
 app.use("/admin", adminRoute);
+app.use("/user", userRoute);
+app.use("/book", bookRoute)
 
 module.exports = app;
